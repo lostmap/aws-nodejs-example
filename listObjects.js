@@ -1,7 +1,7 @@
-var AWS = require("aws-sdk");
 var https = require('https');
+var AWS = require("aws-sdk");
 
-var config = {
+var s3 = new AWS.S3({
     endpoint: "https://sds.mts.ru",
     sslEnabled: true,
     s3ForcePathStyle: true,
@@ -11,11 +11,9 @@ var config = {
             rejectUnauthorized: false
         })
     }
-};
+});
 
-AWS.config.update(config);
-var s3 = new AWS.S3();
-params = {
+var params = {
     Bucket: process.argv[2]
 };
 
