@@ -19,11 +19,10 @@ var s3 = new AWS.S3();
 params = {
     Bucket: process.argv[2],
     Key: process.argv[3],
-    Body: fs.readFileSync(process.argv[4]),
- // ACL: 'public-read',
+    ACL: 'public-read',
 };
 
-s3.putObject(params, function(err, data) {
+s3.putObjectAcl(params, function(err, data) {
     if (err) {
         console.log("Error", err, err.stack);
     } else {
