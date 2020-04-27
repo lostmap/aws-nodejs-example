@@ -7,16 +7,12 @@ var s3 = new AWS.S3({
     sslEnabled: true,
     s3ForcePathStyle: true,
     region: 'RegionOne',
-    httpOptions: {
-        agent: new https.Agent({
-            rejectUnauthorized: false
-        })
-    }
 });
 
 var params = {
     Bucket: process.argv[2],
     Key: process.argv[3],
+    VersionId: process.argv[4],
 };
 
 var fileStream = fs.createWriteStream(params['Key']);

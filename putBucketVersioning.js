@@ -12,12 +12,13 @@ AWS.config.update(config);
 var s3 = new AWS.S3();
 params = {
     Bucket: process.argv[2], 
-    CreateBucketConfiguration: {
-        LocationConstraint: "" // Без этого параметра не создается бакет (ошибка региона)
-    }
+    VersioningConfiguration: {
+   	MFADelete: "Disabled", 
+   	Status: "Suspended"
+  }
 };
 
-s3.createBucket(params, function(err, data) {
+s3.putBucketVersioning(params, function(err, data) {
     if (err) {
         console.log("Error", err, err.stack);
     } else {

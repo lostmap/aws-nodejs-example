@@ -1,16 +1,19 @@
 var AWS = require("aws-sdk");
 var https = require('https');
+var fs = require('fs');
+//require('https').globalAgent.options.ca = fs.readFileSync('digi.pem')
+//test
+//test 2
+
+var certs = [
+  fs.readFileSync('digi.pem')
+];
 
 var config = {
     endpoint: "https://sds.mts.ru",
     sslEnabled: true,
     s3ForcePathStyle: true,
     region: 'RegionOne',
-    httpOptions: {
-        agent: new https.Agent({
-            rejectUnauthorized: false
-        })
-    }
 };
 
 AWS.config.update(config);
