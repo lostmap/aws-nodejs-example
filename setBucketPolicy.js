@@ -3,7 +3,7 @@ var https = require('https');
 var fs = require('fs');
 
 var config = {
-    endpoint: "https://sds.mts.ru",
+    endpoint: "https://localhost",
     sslEnabled: true,
     s3ForcePathStyle: true,
     region: 'RegionOne',
@@ -22,10 +22,37 @@ var readOnlyAnonUserPolicy = {
         Effect: "Allow",
         Principal: "*",
         Action: [
-          "s3:GetObject"
+          "s3:*"
         ],
         Resource: [
-          ""
+          "arn:aws:s3:::*"
+        ]
+      },
+      {
+        Sid: "AddPermsec",
+        Effect: "Allow",
+        Principal: "*",
+        Action: [
+          "s3:ListBucket",
+          "s3:GetBucketLocation",
+          "s3:ListBucketMultipartUploads",
+          "s3:ListBucketVersions"
+        ],
+        Resource: [
+          "arn:aws:s3:::news"
+        ]
+      },
+      {
+        Sid: "AddPermthird",
+        Effect: "Allow",
+        Principal: "*",
+        Action: [
+          "s3:*Object*",
+          "s3:ListMultipartUploadParts",
+          "s3:AbortMultipartUpload"
+        ],
+        Resource: [
+          "arn:aws:s3:::news/*"
         ]
       }
     ]
@@ -38,7 +65,7 @@ AWS.config.update(config);
 var s3 = new AWS.S3();
 params = {
     Bucket: process.argv[2],
-    Policy: json,
+    Policy: JSON.stringify(readOnlyAnonUserPolicy),
   //Policy: JSON.stringify(readOnlyAnonUserPolicy),
 };
 

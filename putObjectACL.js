@@ -3,7 +3,7 @@ var https = require('https');
 var fs = require('fs');
 
 var config = {
-    endpoint: "https://sds.mts.ru",
+    endpoint: "https://localhost",
     sslEnabled: true,
     s3ForcePathStyle: true,
     region: 'RegionOne',
@@ -19,7 +19,7 @@ var s3 = new AWS.S3();
 params = {
     Bucket: process.argv[2],
     Key: process.argv[3],
-    ACL: 'public-read',
+    ACL: 'public-read-write',
 };
 
 s3.putObjectAcl(params, function(err, data) {
